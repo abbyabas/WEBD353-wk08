@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+
+    hello rene
+
+    <button id="motor__on" type="button" name="button">ON</button>
+    <button id="motor__off" type="button" name="button">OFF</button>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).on("click", "#motor__on", function(){
+            console.log("click on");
+            $.ajax({
+                url:"/motor/on"
+            })
+        })
+
+        $(document).on("click", "#motor__off", function(){
+            console.log("click off");
+            $.ajax({
+                url:"/motor/off"
+            })
+        })
+    </script>
+
+    </body>
+</html>

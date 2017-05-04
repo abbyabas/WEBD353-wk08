@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Arduino and Nodejs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ultra" rel="stylesheet">
+    <link rel="stylesheet" href="/css/stylesheet.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Press the Button!</h1>
+        <div class="columns">
+            <p>Activated by the Button on the breadboard</p>
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                <label class="onoffswitch-label" for="myonoffswitch"></label>
+            </div>
+            <p>Actives the LED on the breadboard</p>
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitchtwo" class="onoffswitch-checkbox-red" id="myonoffswitchtwo">
+                <label class="onoffswitch-label" for="myonoffswitchtwo"></label>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        var toggleVal = 0;
+        var socket = io();
+        socket.on('updateData', function (receivedData) {
+            console.log(receivedData);
+            if (receivedData == 1) {
+                $("#myonoffswitch").prop("checked", true);
+            } else {
+                $("#myonoffswitch").prop("checked", false);
+            }
+        });
+        $('#myonoffswitchtwo').click(function () {
+            toggleVal += 1;
+            toggleVal %= 2;
+            // the code above checks to see if the number is 1 or 2 and divides by 2 and checks the remainder and will be a 1 or 0
+            socket.emit('buttonval', toggleVal); // this will send a the value to a function on the server that is listening. 
+            console.log(toggleVal);
+        });
+    </script>
+</body>
+
+</html>
